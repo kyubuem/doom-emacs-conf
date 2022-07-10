@@ -40,8 +40,7 @@
 
 ;; If you use `org' and don't want your org files in the default location below,
 ;; change `org-directory'. It must be set before org loads!
-(setq org-directory "~/org/")
-
+(setq org-directory "~/Library/Projects/org")
 
 ;; Whenever you reconfigure a package, make sure to wrap your config in an
 ;; `after!' block, otherwise Doom's defaults may override your settings. E.g.
@@ -75,11 +74,32 @@
 ;; You can also try 'gd' (or 'C-c c d') to jump to their definition and see how
 ;; they are implemented.
 
-(cond (IS-MAC
-	(setq mac-command-modifier	'meta
-	     mac-option-modifier	'alt)))
-
 (setq gofmt-command "goimports")
 (add-hook 'before-save-hook 'gofmt-before-save)
 
 (setq ccls-args '("--init={\"cache\":{\"directory\":\"/home/goodboy/.cache/ccls\"},\"cacheFormat\":\"json\",\"compilationDatabaseDirectory\":\"build\",\"index\":{\"threads\":2}}"))
+
+(setq org-fold-core-style 'overlay)
+
+(defun efs/presentation-setup()
+  (setq text-scale-mode-amount 3)
+  (org-display-inline-images)
+
+  (setq-local face-remapping-alist '((default (:height 3) default)
+                              (italic (:height 2.5) italic))))
+
+(defun efs/presentation-end()
+  (setq-local face-remapping-alist '((default variable-pitch default))))
+
+(add-hook 'org-mode-hook (lambda () (setq-local display-line-numbers nil)))
+(add-hook 'org-tree-slide-play-hook 'efs/presentation-setup)
+(add-hook 'org-tree-slide-stop-hook 'efs/presentation-end)
+
+(setq face-remapping-alist '((default (:height 3) default)
+                             (italic (:height 2.4) italic)))
+(setq org-tree-slide-slide-in-effect t)
+(setq org-tree-slide-activate-message "Presentation started!")
+(setq org-tree-slide-deactivate-message "Presentation finished")
+(setq org-tree-slide-header t)
+(setq org-tree-slide-breadcrumbs " // ")
+(setq org-image-actual-width nil)
