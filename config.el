@@ -78,3 +78,6 @@
 (cond (IS-MAC
 	(setq mac-command-modifier	'meta
 	     mac-option-modifier	'alt)))
+
+(setq gofmt-command "goimports")
+(add-hook 'before-save-hook 'gofmt-before-save)
