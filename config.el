@@ -83,23 +83,27 @@
 
 (defun efs/presentation-setup()
   (setq text-scale-mode-amount 3)
+  (hide-mode-line-mode 1)
   (org-display-inline-images)
+  (text-scale-mode 1))
 
-  (setq-local face-remapping-alist '((default (:height 3) default)
-                              (italic (:height 2.5) italic))))
 
 (defun efs/presentation-end()
-  (setq-local face-remapping-alist '((default variable-pitch default))))
+  (hide-mode-line-mode 0)
+  (text-scale-mode 0))
 
 (add-hook 'org-mode-hook (lambda () (setq-local display-line-numbers nil)))
 (add-hook 'org-tree-slide-play-hook 'efs/presentation-setup)
 (add-hook 'org-tree-slide-stop-hook 'efs/presentation-end)
 
-(setq face-remapping-alist '((default (:height 3) default)
-                             (italic (:height 2.4) italic)))
 (setq org-tree-slide-slide-in-effect t)
 (setq org-tree-slide-activate-message "Presentation started!")
 (setq org-tree-slide-deactivate-message "Presentation finished")
 (setq org-tree-slide-header t)
 (setq org-tree-slide-breadcrumbs " // ")
 (setq org-image-actual-width nil)
+(setq org-tree-slide-modeline-display nil)
+
+(add-to-list 'initial-frame-alist '(fullscreen . maximized))
+(add-hook 'window-setup-hook #'toggle-frame-maximized)
+(add-hook 'window-setup-hook #'toggle-frame-fullscreen)
