@@ -81,3 +81,5 @@
 
 (setq gofmt-command "goimports")
 (add-hook 'before-save-hook 'gofmt-before-save)
+
+(setq ccls-args '("--init={\"cache\":{\"directory\":\"/home/goodboy/.cache/ccls\"},\"cacheFormat\":\"json\",\"compilationDatabaseDirectory\":\"build\",\"index\":{\"threads\":2}}"))
