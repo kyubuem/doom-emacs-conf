@@ -9,6 +9,10 @@
 (setq user-full-name "Kyubuem Lim"
       user-mail-address "kyubuem@gmail.com")
 
+(unless (equal "Baterry status not available"
+               (battery))
+  (display-battery-mode 1))
+
 ;; Doom exposes five (optional) variables for controlling fonts in Doom:
 ;;
 ;; - `doom-font' -- the primary font to use
@@ -21,8 +25,9 @@
 ;; See 'C-h v doom-font' for documentation and more examples of what they
 ;; accept. For example:
 ;;
-;;(setq doom-font (font-spec :family "Fira Code" :size 12 :weight 'semi-light)
-;;      doom-variable-pitch-font (font-spec :family "Fira Sans" :size 13))
+(setq doom-font (font-spec :family "Fira Code" :size 12)
+      doom-variable-pitch-font (font-spec :family "Fira Code" :size 13)
+      doom-unicode-font (font-spec :family "D2Coding" :size 12))
 ;;
 ;; If you or Emacs can't find your font, use 'M-x describe-font' to look them
 ;; up, `M-x eval-region' to execute elisp code, and 'M-x doom/reload-font' to
@@ -78,32 +83,33 @@
 (add-hook 'before-save-hook 'gofmt-before-save)
 
 (setq ccls-args '("--init={\"cache\":{\"directory\":\"/home/goodboy/.cache/ccls\"},\"cacheFormat\":\"json\",\"compilationDatabaseDirectory\":\"build\",\"index\":{\"threads\":2}}"))
+(setq lsp-lens-enable nil)
 
-(setq org-fold-core-style 'overlay)
+;;(add-to-list 'initial-frame-alist '(fullscreen . maximized))
+;;(add-hook 'window-setup-hook #'toggle-frame-maximized)
+;;(add-hook 'window-setup-hook #'toggle-frame-fullscreen)
+;;(add-hook 'window-setup-hook #'toggle-frame)
 
-(defun efs/presentation-setup()
-  (setq text-scale-mode-amount 3)
-  (hide-mode-line-mode 1)
-  (org-display-inline-images)
-  (text-scale-mode 1))
+(setq org-startup-with-inline-images t)
 
+(add-hook 'org-babel-after-execute-hook 'org-redisplay-inline-images)
 
-(defun efs/presentation-end()
-  (hide-mode-line-mode 0)
-  (text-scale-mode 0))
+(setq plantuml-executable-path "/opt/homebrew/bin/plantuml")
+(setq plantuml-default-exec-mode 'executable)
 
-(add-hook 'org-mode-hook (lambda () (setq-local display-line-numbers nil)))
-(add-hook 'org-tree-slide-play-hook 'efs/presentation-setup)
-(add-hook 'org-tree-slide-stop-hook 'efs/presentation-end)
+(add-hook 'evil-insert-state-exit-hook (lambda ()
+                                         (setq evil-input-method nil)))
 
-(setq org-tree-slide-slide-in-effect t)
-(setq org-tree-slide-activate-message "Presentation started!")
-(setq org-tree-slide-deactivate-message "Presentation finished")
-(setq org-tree-slide-header t)
-(setq org-tree-slide-breadcrumbs " // ")
-(setq org-image-actual-width nil)
-(setq org-tree-slide-modeline-display nil)
+(setq default-input-method "korean-hangul")
+;;(global-set-key (kbd "<S-SPC>") 'toggle-input-method)
 
-(add-to-list 'initial-frame-alist '(fullscreen . maximized))
-(add-hook 'window-setup-hook #'toggle-frame-maximized)
-(add-hook 'window-setup-hook #'toggle-frame-fullscreen)
+(add-to-list 'default-frame-alist '(inhibit-double-buffering . t))
+
+(setq lsp-file-watch-threshold (* 1024 1024))
+(setq read-process-output-max (* 10 1024 1024))
+
+(setq lsp-auto-guess-root t)
+
+(add-to-list 'auto-mode-alist '("\\.h\\'" . c++-mode))
+
+(setq lsp-enable-file-watchers nil)

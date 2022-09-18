@@ -56,5 +56,3 @@
 (use-package cmake-font-lock
   :after cmake-mode
   :config (cmake-font-lock-activate))
-
-(use-package hide-mode-line)
