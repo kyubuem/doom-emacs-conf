@@ -49,10 +49,7 @@
 ;; ...Or *all* packages (NOT RECOMMENDED; will likely break things)
 ;(unpin! t)
 
-(use-package cmake-mode
-  :hook (cmake-mode . lsp-deferred))
 
-
-(use-package cmake-font-lock
-  :after cmake-mode
-  :config (cmake-font-lock-activate))
+(package! google-c-style)
+(package! clang-format)
+(package! cmake-font-lock)

@@ -25,8 +25,8 @@
 ;; See 'C-h v doom-font' for documentation and more examples of what they
 ;; accept. For example:
 ;;
-(setq doom-font (font-spec :family "Fira Code" :size 12)
-      doom-variable-pitch-font (font-spec :family "Fira Code" :size 13)
+(setq doom-font (font-spec :family "Fira Code Retina" :size 12)
+      doom-variable-pitch-font (font-spec :family "Roboto" :size 13)
       doom-unicode-font (font-spec :family "D2Coding" :size 12))
 ;;
 ;; If you or Emacs can't find your font, use 'M-x describe-font' to look them
@@ -113,3 +113,32 @@
 (add-to-list 'auto-mode-alist '("\\.h\\'" . c++-mode))
 
 (setq lsp-enable-file-watchers nil)
+
+(use-package! cmake-mode
+  :hook (cmake-mode . lsp-deferred))
+
+
+(use-package! cmake-font-lock
+  :after cmake-mode
+  :config (cmake-font-lock-activate))
+
+(use-package! clang-format
+  :init
+  (setq clang-format-executable "/opt/homebrew/bin/clang-format")
+  (defun clang-format-save-hook-for-this-buffer ()
+    "Create a buffer local save hook."
+    (add-hook 'before-save-hook
+              (lambda ()
+                (progn
+                  (when (locate-dominating-file "." ".clang-format")
+                    (clang-format-buffer))
+                  nil))
+              nil
+              t)))
+
+(add-hook 'c-mode-hook (lambda () (clang-format-save-hook-for-this-buffer)))
+(add-hook 'c++-mode-hook (lambda () (clang-format-save-hook-for-this-buffer)))
+(add-hook 'c-mode-common-hook 'google-set-c-style)
+(add-hook 'c-mode-common-hook 'google-make-newline-indent)
+
+(add-to-list 'auto-mode-alist '("\\.h\\'" . c++-mode))
