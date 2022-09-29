@@ -53,3 +53,4 @@
 (package! google-c-style)
 (package! clang-format)
 (package! cmake-font-lock)
+(package! flycheck-clang-tidy)

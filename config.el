@@ -24,10 +24,11 @@
 ;;
 ;; See 'C-h v doom-font' for documentation and more examples of what they
 ;; accept. For example:
+(add-to-list 'initial-frame-alist '(fullscreen . maximized))
 ;;
-(setq doom-font (font-spec :family "Fira Code Retina" :size 12)
+(setq doom-font (font-spec :family "Fira Code Retina" :size 13)
       doom-variable-pitch-font (font-spec :family "Roboto" :size 13)
-      doom-unicode-font (font-spec :family "D2Coding" :size 12))
+      doom-unicode-font (font-spec :family "D2Coding" :size 13))
 ;;
 ;; If you or Emacs can't find your font, use 'M-x describe-font' to look them
 ;; up, `M-x eval-region' to execute elisp code, and 'M-x doom/reload-font' to
@@ -142,3 +143,14 @@
 (add-hook 'c-mode-common-hook 'google-make-newline-indent)
 
 (add-to-list 'auto-mode-alist '("\\.h\\'" . c++-mode))
+
+(defun ccls/callee () (interactive) (lsp-ui-peek-find-custom "$ccls/call" '(:callee t)))
+(defun ccls/caller () (interactive) (lsp-ui-peek-find-custom "$ccls/call"))
+
+(use-package flycheck-clang-tidy
+  :after flycheck
+  :hook
+  (flycheck-mode . flycheck-clang-tidy-setup)
+  )
+
+(setq flycheck-clang-tidy-executable "/opt/homebrew/Cellar/llvm/15.0.1/bin/clang-tidy")
