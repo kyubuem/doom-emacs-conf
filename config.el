@@ -83,7 +83,7 @@
 (setq gofmt-command "goimports")
 (add-hook 'before-save-hook 'gofmt-before-save)
 
-(setq ccls-args '("--init={\"cache\":{\"directory\":\"/home/goodboy/.cache/ccls\"},\"cacheFormat\":\"json\",\"compilationDatabaseDirectory\":\"build\",\"index\":{\"threads\":2}}"))
+(setq ccls-args '("--init={\"cache\":{\"directory\":\"$HOME/.cache/ccls\"},\"cacheFormat\":\"json\",\"compilationDatabaseDirectory\":\"build\",\"index\":{\"threads\":2}}"))
 (setq lsp-lens-enable nil)
 
 ;;(add-to-list 'initial-frame-alist '(fullscreen . maximized))
@@ -154,3 +154,5 @@
   )
 
 (setq flycheck-clang-tidy-executable "/opt/homebrew/Cellar/llvm/15.0.1/bin/clang-tidy")
+
+(add-hook 'c-mode-common-hook #'+word-wrap-mode)
