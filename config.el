@@ -26,9 +26,9 @@
 ;; accept. For example:
 (add-to-list 'initial-frame-alist '(fullscreen . maximized))
 ;;
-(setq doom-font (font-spec :family "Fira Code Retina" :size 13)
-      doom-variable-pitch-font (font-spec :family "Roboto" :size 13)
-      doom-unicode-font (font-spec :family "D2Coding" :size 13))
+(setq doom-font (font-spec :family "Fira Code Retina" :size 12)
+      doom-variable-pitch-font (font-spec :family "Fira Code Retina" :size 12)
+      doom-unicode-font (font-spec :family "D2Coding ligature" :size 12))
 ;;
 ;; If you or Emacs can't find your font, use 'M-x describe-font' to look them
 ;; up, `M-x eval-region' to execute elisp code, and 'M-x doom/reload-font' to
@@ -83,7 +83,7 @@
 (setq gofmt-command "goimports")
 (add-hook 'before-save-hook 'gofmt-before-save)
 
-(setq ccls-args '("--init={\"cache\":{\"directory\":\"$HOME/.cache/ccls\"},\"cacheFormat\":\"json\",\"compilationDatabaseDirectory\":\"build\",\"index\":{\"threads\":2}}"))
+(setq ccls-args '("--init={\"cache\":{\"directory\":\"/Users/goodboy/.cache/ccls\"},\"cacheFormat\":\"json\",\"compilationDatabaseDirectory\":\"build\",\"index\":{\"threads\":2}}"))
 (setq lsp-lens-enable nil)
 
 ;;(add-to-list 'initial-frame-alist '(fullscreen . maximized))
@@ -102,7 +102,7 @@
                                          (setq evil-input-method nil)))
 
 (setq default-input-method "korean-hangul")
-;;(global-set-key (kbd "<S-SPC>") 'toggle-input-method)
+(global-set-key (kbd "<S-SPC>") 'toggle-input-method)
 
 (add-to-list 'default-frame-alist '(inhibit-double-buffering . t))
 
@@ -156,3 +156,9 @@
 (setq flycheck-clang-tidy-executable "/opt/homebrew/Cellar/llvm/15.0.1/bin/clang-tidy")
 
 (add-hook 'c-mode-common-hook #'+word-wrap-mode)
+
+(use-package! python-black
+  :demand t
+  :after python
+  :config
+  (add-hook! 'python-mode-hook #'python-black-on-save-mode))

@@ -54,3 +54,4 @@
 (package! clang-format)
 (package! cmake-font-lock)
 (package! flycheck-clang-tidy)
+(package! python-black)
